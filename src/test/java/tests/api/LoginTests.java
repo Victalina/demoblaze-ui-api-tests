@@ -1,4 +1,4 @@
-package tests.API;
+package tests.api;
 
 import helpers.PasswordEncoder;
 import io.restassured.response.Response;
