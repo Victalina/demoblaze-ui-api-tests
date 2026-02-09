@@ -9,6 +9,7 @@ import static io.restassured.filter.log.LogDetail.ALL;
 
 public class Spec {
   public static RequestSpecification requestSpec = with()
+          .contentType("application/json")
           .log().all();
 
 

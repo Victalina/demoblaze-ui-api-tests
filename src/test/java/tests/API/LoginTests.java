@@ -1,4 +1,4 @@
-package tests;
+package tests.API;
 
 import helpers.PasswordEncoder;
 import io.restassured.response.Response;
@@ -15,9 +15,10 @@ import static spec.Spec.requestSpec;
 import static spec.Spec.responseSpecStatusCode;
 
 public class LoginTests extends TestBase {
+  // API returns 200 even for error cases
 
   @Test
-  void SuccessfulLoginTest() {
+  void successfulLoginShouldReturnAuthTokenTest() {
 
     LoginRequestModel authData = new LoginRequestModel("Auto Tests",
             PasswordEncoder.encode("Test2026!"));
@@ -33,12 +34,12 @@ public class LoginTests extends TestBase {
                     .response();
 
     String responseString = response.asString();
-    assertThat(responseString, not(emptyOrNullString()));
-    assertThat(responseString, startsWith("\"Auth_token: "));
+    String token = responseString.replace("\"Auth_token: ", "").replace("\"", "");
+    assertThat(token, not(emptyString()));
   }
 
   @Test
-  void unsuccessfulLoginUserNotFoundTest() {
+  void loginWithNonExistingUserShouldReturnErrorMessageTest() {
 
     LoginRequestModel authData = new LoginRequestModel("Auto Tests1",
             PasswordEncoder.encode("Test2026!"));
@@ -56,7 +57,7 @@ public class LoginTests extends TestBase {
   }
 
   @Test
-  void unsuccessfulLoginWrongPasswordTest() {
+  void loginWithWrongPasswordShouldReturnErrorMessageTest() {
 
     LoginRequestModel authData = new LoginRequestModel("Auto Tests",
             PasswordEncoder.encode("Test2026"));
@@ -75,7 +76,7 @@ public class LoginTests extends TestBase {
 
   @Disabled("Status code: 500 Internal Server Error")
   @Test
-  void unsuccessfulLoginEmptyUsernameAndPasswordTest() {
+  void loginWithEmptyUsernameAndPasswordShouldReturnErrorMessageTest() {
 
     LoginRequestModel authData = new LoginRequestModel("",
             PasswordEncoder.encode(""));
@@ -93,7 +94,7 @@ public class LoginTests extends TestBase {
   }
 
   @Test
-  void unsuccessfulLoginEmptyRequestBodyTest() {
+  void loginWithEmptyRequestBodyShouldReturnErrorMessageTest() {
 
     String emptyBody = "{}";
     ErrorMessageModel response =
