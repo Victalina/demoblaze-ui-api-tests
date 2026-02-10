@@ -5,7 +5,7 @@ import org.junit.jupiter.api.BeforeAll;
 
 public class TestBase {
   @BeforeAll
-  static void setup() {
+  static void setupConfig() {
     RestAssured.baseURI = "https://api.demoblaze.com";
   }
 }

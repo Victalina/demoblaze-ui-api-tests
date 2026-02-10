@@ -1,13 +1,37 @@
 plugins {
-    id 'java'
-    id "io.freefair.lombok" version '8.13.1'
+    id 'java-library'
+    id 'io.qameta.allure' version '2.12.0'
+    id 'io.freefair.lombok' version '8.13.1'
 }
 
 group = 'com.demoblaze'
 version = '1.0-SNAPSHOT'
 
+compileJava {
+    options.encoding = 'UTF-8'
+}
+compileTestJava{
+    options.encoding = 'UTF-8'
+}
+
 repositories {
     mavenCentral()
+}
+
+def allureVersion = "2.25.0"
+
+allure {
+    report {
+        version.set(allureVersion)
+    }
+    adapter {
+        aspectjWeaver.set(true)
+        frameworks {
+            junit5 {
+                adapterVersion.set(allureVersion)
+            }
+        }
+    }
 }
 
 dependencies {
@@ -16,10 +40,26 @@ dependencies {
             "com.codeborne:selenide:7.2.2",
             "io.rest-assured:rest-assured:5.5.1",
             "io.rest-assured:json-schema-validator:5.5.1",
+            "io.qameta.allure:allure-rest-assured:$allureVersion",
             "org.slf4j:slf4j-simple:2.0.16"
     )
 }
 
 test {
     useJUnitPlatform()
+    systemProperties(System.getProperties())
+}
+
+tasks.withType(Test) {
+
+    useJUnitPlatform()
+
+    systemProperties(System.getProperties())
+
+    testLogging {
+        lifecycle {
+            events "started", "skipped", "failed", "standardOut", "standardError"
+            exceptionFormat "short"
+        }
+    }
 }
