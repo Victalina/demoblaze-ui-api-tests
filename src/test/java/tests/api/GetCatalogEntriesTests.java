@@ -7,10 +7,7 @@ import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import static io.qameta.allure.Allure.step;
-import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.*;
-import static spec.Spec.requestSpec;
-import static spec.Spec.responseSpecStatusCode;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 
@@ -22,14 +19,7 @@ public class GetCatalogEntriesTests extends TestBase {
   @Tag("smoke")
   void getCatalogEntriesReturnsNonEmptyArrayTest() {
 
-    EntriesResponseModel response = step("Send request to get product catalog", () ->
-            given(requestSpec)
-                    .when()
-                    .get("/entries")
-                    .then()
-                    .spec(responseSpecStatusCode(200))
-                    .extract().as(EntriesResponseModel.class));
-
+    EntriesResponseModel response = catalogApi.getCatalogEntries();
     EntryResponseModel[] entries = response.getItems();
 
     step("Verify catalog is not empty", () ->
@@ -40,51 +30,37 @@ public class GetCatalogEntriesTests extends TestBase {
   @DisplayName("Catalog entry has correct structure")
   void getCatalogEntryHasCorrectStructureTest() {
 
-    EntriesResponseModel response = step("Send request to get product catalog", () ->
-            given(requestSpec)
-                    .when()
-                    .get("/entries")
-                    .then()
-                    .spec(responseSpecStatusCode(200))
-                    .extract().as(EntriesResponseModel.class));
-
+    EntriesResponseModel response = catalogApi.getCatalogEntries();
     EntryResponseModel[] entries = response.getItems();
 
     step("Verify catalog is not empty", () ->
             assertThat("Catalog must contain at least one entry",
                     entries.length, greaterThan(0)));
 
-    EntryResponseModel randomEntry = entries[0];
+    EntryResponseModel firstEntry = step("Select first entry from catalog", () -> entries[0]);
 
-    step("Verify random catalog entry has correct structure", () -> {
-      assertThat(randomEntry.getCat(), not(emptyString()));
-      assertThat(randomEntry.getDesc(), not(emptyString()));
-      assertThat(randomEntry.getId(), notNullValue());
-      assertThat(randomEntry.getImg(), not(emptyString()));
-      assertThat(randomEntry.getPrice(), is(greaterThan(0.0)));
-      assertThat(randomEntry.getTitle(), not(emptyString()));
+    step("Verify first catalog entry has correct structure", () -> {
+      assertThat(firstEntry.getCat(), not(emptyString()));
+      assertThat(firstEntry.getDesc(), not(emptyString()));
+      assertThat(firstEntry.getId(), notNullValue());
+      assertThat(firstEntry.getImg(), not(emptyString()));
+      assertThat(firstEntry.getPrice(), is(greaterThan(0.0)));
+      assertThat(firstEntry.getTitle(), not(emptyString()));
     });
   }
 
   @Test
-  @DisplayName("Last evaluated key is equal to last entry id")
+  @DisplayName("Last evaluated key is equal to the last entry id")
   void getCatalogLastEvaluatedKeyTest() {
 
-    EntriesResponseModel response = step("Send request to get product catalog", () ->
-            given(requestSpec)
-                    .when()
-                    .get("/entries")
-                    .then()
-                    .spec(responseSpecStatusCode(200))
-                    .extract().as(EntriesResponseModel.class));
-
+    EntriesResponseModel response = catalogApi.getCatalogEntries();
     EntryResponseModel[] entries = response.getItems();
 
     step("Verify catalog is not empty", () ->
             assertThat("Catalog must contain at least one entry",
                     entries.length, greaterThan(0)));
 
-    step("Verify last evaluated key is last entry id", () ->
+    step("Verify last evaluated key is the last entry id", () ->
             assertThat(response.getLastEvaluatedKey().getId(),
                     is(String.valueOf(entries[entries.length - 1].getId()))));
   }

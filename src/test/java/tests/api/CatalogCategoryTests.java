@@ -1,6 +1,5 @@
 package tests.api;
 
-import models.CategoryRequestModel;
 import models.CategoryResponseModel;
 import models.EntryResponseModel;
 import org.junit.jupiter.api.DisplayName;
@@ -10,11 +9,8 @@ import org.junit.jupiter.params.provider.ValueSource;
 
 
 import static io.qameta.allure.Allure.step;
-import static io.restassured.RestAssured.given;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
-import static spec.Spec.requestSpec;
-import static spec.Spec.responseSpecStatusCode;
 
 @DisplayName("Catalog category")
 public class CatalogCategoryTests extends TestBase {
@@ -23,17 +19,7 @@ public class CatalogCategoryTests extends TestBase {
   @ParameterizedTest(name = "Get entries by category {0} returns only requested category")
   void getEntriesByCategoryReturnsOnlyRequestedCategoryTest(String category) {
 
-    CategoryRequestModel cat = new CategoryRequestModel(category);
-
-    CategoryResponseModel response = step("Send request to get product from category", () ->
-            given(requestSpec)
-                    .body(cat)
-                    .when()
-                    .post("/bycat")
-                    .then()
-                    .spec(responseSpecStatusCode(200))
-                    .extract().as(CategoryResponseModel.class));
-
+    CategoryResponseModel response = catalogApi.getEntriesByCategory(category);
     EntryResponseModel[] entries = response.getItems();
 
     step("Verify category catalog is not empty", () ->
@@ -52,17 +38,7 @@ public class CatalogCategoryTests extends TestBase {
   @DisplayName("Get entries by non-existent category returns empty array")
   void getEntriesByNonExistentCategoryReturnsEmptyArrayTest() {
 
-    CategoryRequestModel cat = new CategoryRequestModel("tablets");
-
-    CategoryResponseModel response = step("Send request to get product from category", () ->
-            given(requestSpec)
-                    .body(cat)
-                    .when()
-                    .post("/bycat")
-                    .then()
-                    .spec(responseSpecStatusCode(200))
-                    .extract().as(CategoryResponseModel.class));
-
+    CategoryResponseModel response = catalogApi.getEntriesByCategory("tablets");
     EntryResponseModel[] entries = response.getItems();
 
     step("Verify category catalog is empty", () ->
