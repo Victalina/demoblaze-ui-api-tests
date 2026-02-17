@@ -41,6 +41,7 @@ dependencies {
             "io.rest-assured:rest-assured:5.5.1",
             "io.rest-assured:json-schema-validator:5.5.1",
             "io.qameta.allure:allure-rest-assured:$allureVersion",
+            "com.github.javafaker:javafaker:1.0.2",
             "org.slf4j:slf4j-simple:2.0.16"
     )
 }
@@ -61,5 +62,41 @@ tasks.withType(Test) {
             events "started", "skipped", "failed", "standardOut", "standardError"
             exceptionFormat "short"
         }
+    }
+}
+
+task all_api_tests(type: Test) {
+    useJUnitPlatform {
+        includeTags("all_api_tests")
+    }
+}
+
+task adding_to_cart_api_tests(type: Test) {
+    useJUnitPlatform {
+        includeTags("adding_to_cart_api_tests")
+    }
+}
+
+task catalog_api_tests(type: Test) {
+    useJUnitPlatform {
+        includeTags("catalog_api_tests")
+    }
+}
+
+task cart_api_tests(type: Test) {
+    useJUnitPlatform {
+        includeTags("cart_api_tests")
+    }
+}
+
+task login_api_tests(type: Test) {
+    useJUnitPlatform {
+        includeTags("login_api_tests")
+    }
+}
+
+task signup_api_tests(type: Test) {
+    useJUnitPlatform {
+        includeTags("signup_api_tests")
     }
 }

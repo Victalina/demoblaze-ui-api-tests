@@ -4,6 +4,7 @@ import models.EntriesResponseModel;
 import models.EntryResponseModel;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
+import org.junit.jupiter.api.Tags;
 import org.junit.jupiter.api.Test;
 
 import static io.qameta.allure.Allure.step;
@@ -11,6 +12,11 @@ import static org.hamcrest.Matchers.*;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 
+@Tags({
+        @Tag("all_api_tests"),
+        @Tag("catalog_api_tests")
+
+})
 @DisplayName("Get catalog entries")
 public class GetCatalogEntriesTests extends TestBase {
 

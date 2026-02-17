@@ -39,4 +39,21 @@ public class AuthApi {
                     .spec(responseSpecStatusCode(200))
                     .extract().as(ErrorMessageModel.class);
   }
+
+  public String getTokenForRegisteredUser(String login, String password) {
+    LoginRequestModel authData = new LoginRequestModel(login, PasswordEncoder.encode(password));
+
+    Response response =
+            given(requestSpec)
+                    .body(authData)
+                    .when()
+                    .post("/login")
+                    .then()
+                    .spec(responseSpecStatusCode(200))
+                    .extract()
+                    .response();
+
+    return response.asString().replace("\"Auth_token: ", "")
+            .replace("\"\n", "");
+  }
 }

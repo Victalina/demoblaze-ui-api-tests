@@ -1,10 +1,9 @@
 package tests.api;
 
+import config.TestConfig;
 import io.restassured.response.Response;
 import models.ErrorMessageModel;
-import org.junit.jupiter.api.Disabled;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
 import static io.qameta.allure.Allure.step;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -14,14 +13,21 @@ import static org.hamcrest.Matchers.*;
 import static spec.Spec.requestSpec;
 import static spec.Spec.responseSpecStatusCode;
 
-@DisplayName("Login Tests")
+@Tags({
+        @Tag("all_api_tests"),
+        @Tag("login_api_tests")
+
+})
+@DisplayName("Login tests")
 public class LoginTests extends TestBase {
 
   @Test
   @DisplayName("Successful login should return auth token")
   void successfulLoginShouldReturnAuthTokenTest() {
+    String login = TestConfig.get("test.user.login");
+    String password = TestConfig.get("test.user.password");
 
-    Response response = authApi.loginWithRegisteredUser("Auto Tests", "Test2026!");
+    Response response = authApi.loginWithRegisteredUser(login, password);
     step("Verify auth token is returned", () -> {
       String responseString = response.asString();
       String token = responseString.replace("\"Auth_token: ", "").replace("\"", "");

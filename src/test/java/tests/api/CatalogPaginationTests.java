@@ -3,6 +3,8 @@ package tests.api;
 import models.EntryResponseModel;
 import models.PaginationResponseModel;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Tag;
+import org.junit.jupiter.api.Tags;
 import org.junit.jupiter.api.Test;
 
 
@@ -10,6 +12,11 @@ import static io.qameta.allure.Allure.step;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 
+@Tags({
+        @Tag("all_api_tests"),
+        @Tag("catalog_api_tests")
+
+})
 @DisplayName("Catalog pagination")
 public class CatalogPaginationTests extends TestBase {
 

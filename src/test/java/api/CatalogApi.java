@@ -7,7 +7,7 @@ import static io.restassured.RestAssured.given;
 import static spec.Spec.requestSpec;
 import static spec.Spec.responseSpecStatusCode;
 
-public class CatalogApi{
+public class CatalogApi {
 
   @Step("Send request to get product catalog")
   public EntriesResponseModel getCatalogEntries() {
@@ -22,7 +22,7 @@ public class CatalogApi{
   }
 
   @Step("Send request to get product from category")
-  public CategoryResponseModel getEntriesByCategory(String category){
+  public CategoryResponseModel getEntriesByCategory(String category) {
 
     CategoryRequestModel cat = new CategoryRequestModel(category);
     return
@@ -37,7 +37,7 @@ public class CatalogApi{
   }
 
   @Step("Send request to get existing product card by id")
-  public ProductCardResponseModel getExistingProductCardById(String id){
+  public ProductCardResponseModel getExistingProductCardById(String id) {
 
     ProductCardRequestModel entryId = new ProductCardRequestModel(id);
     return
@@ -51,7 +51,7 @@ public class CatalogApi{
   }
 
   @Step("Send request to get non-existent product card by id")
-  public ErrorMessageModel getNonExistentProductCardById(String id){
+  public ErrorMessageModel getNonExistentProductCardById(String id) {
 
     ProductCardRequestModel entryId = new ProductCardRequestModel(id);
     return
@@ -65,7 +65,7 @@ public class CatalogApi{
   }
 
   @Step("Get catalog entities after id")
-  public PaginationResponseModel getPaginatingCatalogEntriesAfterId(String id){
+  public PaginationResponseModel getPaginatingCatalogEntriesAfterId(String id) {
     PaginationRequestModel afterId = new PaginationRequestModel(id);
     return
             given(requestSpec)
