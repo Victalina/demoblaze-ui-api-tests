@@ -12,8 +12,8 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 
 @Tags({
-        @Tag("all_api_tests"),
-        @Tag("catalog_api_tests")
+        @Tag("allApiTests"),
+        @Tag("catalogApiTests")
 
 })
 @DisplayName("Get product card")

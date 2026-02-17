@@ -18,8 +18,8 @@ import static spec.Spec.requestSpec;
 import static spec.Spec.responseSpecStatusCode;
 
 @Tags({
-        @Tag("all_api_tests"),
-        @Tag("adding_to_cart_api_tests")
+        @Tag("allApiTests"),
+        @Tag("cartApiTests")
 
 })
 @DisplayName("Add product to cart by unregistered user")

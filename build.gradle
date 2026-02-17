@@ -65,38 +65,32 @@ tasks.withType(Test) {
     }
 }
 
-task all_api_tests(type: Test) {
+task allApiTests(type: Test) {
     useJUnitPlatform {
-        includeTags("all_api_tests")
+        includeTags("allApiTests")
     }
 }
 
-task adding_to_cart_api_tests(type: Test) {
+task catalogApiTests(type: Test) {
     useJUnitPlatform {
-        includeTags("adding_to_cart_api_tests")
+        includeTags("catalogApiTests")
     }
 }
 
-task catalog_api_tests(type: Test) {
+task cartApiTests(type: Test) {
     useJUnitPlatform {
-        includeTags("catalog_api_tests")
+        includeTags("cartApiTests")
     }
 }
 
-task cart_api_tests(type: Test) {
+task loginApiTests(type: Test) {
     useJUnitPlatform {
-        includeTags("cart_api_tests")
+        includeTags("loginApiTests")
     }
 }
 
-task login_api_tests(type: Test) {
+task signupApiTests(type: Test) {
     useJUnitPlatform {
-        includeTags("login_api_tests")
-    }
-}
-
-task signup_api_tests(type: Test) {
-    useJUnitPlatform {
-        includeTags("signup_api_tests")
+        includeTags("signupApiTests")
     }
 }

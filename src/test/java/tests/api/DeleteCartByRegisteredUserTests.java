@@ -12,8 +12,8 @@ import static org.hamcrest.Matchers.*;
 import static org.hamcrest.Matchers.is;
 
 @Tags({
-        @Tag("all_api_tests"),
-        @Tag("cart_api_tests")
+        @Tag("allApiTests"),
+        @Tag("cartApiTests")
 
 })
 @DisplayName("Deletion cart by registered user")

@@ -14,8 +14,8 @@ import static spec.Spec.requestSpec;
 import static spec.Spec.responseSpecStatusCode;
 
 @Tags({
-        @Tag("all_api_tests"),
-        @Tag("login_api_tests")
+        @Tag("allApiTests"),
+        @Tag("loginApiTests")
 
 })
 @DisplayName("Login tests")
