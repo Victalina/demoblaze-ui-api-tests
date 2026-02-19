@@ -1,4 +1,5 @@
-base.url=https://demoblaze.com
+base.url.api=https://api.demoblaze.com
+base.url.ui=https://www.demoblaze.com
 
 test.user.login=your_login_here
 test.user.password=your_password_here
