@@ -17,7 +17,7 @@ public class TestBase {
 
   @BeforeAll
   static void setupConfig() {
-    RestAssured.baseURI = TestConfig.get("base.url");
+    RestAssured.baseURI = TestConfig.get("base.url.api");
   }
 
 }
