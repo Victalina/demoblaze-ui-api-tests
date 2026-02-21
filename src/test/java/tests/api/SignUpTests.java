@@ -21,13 +21,13 @@ import static spec.Spec.responseSpecStatusCode;
 @DisplayName("Sign up tests")
 public class SignUpTests extends TestBase {
 
-  TestData testData = new TestData();
-  private final String login = testData.getLogin();
-  private final String password = testData.getPassword();
-
   @Test
   @DisplayName("After successful sign up, login should return auth token")
   void afterSuccessfulSignUpLoginShouldReturnAuthTokenTest() {
+
+    TestData testData = new TestData();
+    String login = testData.getLogin();
+    String password = testData.getPassword();
 
     Response responseSignUp = signUpApi.sendRequestToSignUpUser(login, password);
 
@@ -43,6 +43,10 @@ public class SignUpTests extends TestBase {
   @DisplayName("Unsuccessful sign up with existing user should return error message")
   void signUpWithExistingUserShouldReturnErrorMessageTest() {
 
+    TestData testData = new TestData();
+    String login = testData.getLogin();
+    String password = testData.getPassword();
+
     Response responseSignUp = signUpApi.sendRequestToSignUpUser(login, password);
     ErrorMessageModel responseReSignUp = signUpApi.unsuccessfulSignUpReturnsError(login, password);
 
@@ -54,6 +58,10 @@ public class SignUpTests extends TestBase {
   @Test
   @DisplayName("Unsuccessful sign up with empty password should return error message")
   void signUpWithEmptyPasswordShouldReturnErrorMessageTest() {
+
+    TestData testData = new TestData();
+    String login = testData.getLogin();
+
     ErrorMessageModel response = signUpApi.unsuccessfulSignUpReturnsError(login, "");
 
     step("Verify error in response", () ->
@@ -64,6 +72,9 @@ public class SignUpTests extends TestBase {
   @Test
   @DisplayName("Unsuccessful sign up with empty username should return error message")
   void signUpWithEmptyUsernameShouldReturnErrorMessageTest() {
+
+    TestData testData = new TestData();
+    String password = testData.getPassword();
 
     ErrorMessageModel response = signUpApi.unsuccessfulSignUpReturnsError("", password);
 

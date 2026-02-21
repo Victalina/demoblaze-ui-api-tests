@@ -9,6 +9,7 @@ import static com.codeborne.selenide.Selenide.$;
 public class LoginComponent {
 
   private final SelenideElement logInModal = $("#logInModal");
+  private final SelenideElement logInModalLabel = $("#logInModal #logInModalLabel");
   private final SelenideElement logInUsernameInput = $("#logInModal #loginusername");
   private final SelenideElement logInPasswordInput = $("#logInModal #loginpassword");
   private final SelenideElement logInButton = $("#logInModal").$(".modal-footer").$$("button")
@@ -17,7 +18,13 @@ public class LoginComponent {
           .findBy(text("Close"));
 
   public void verifyLogInModalIsVisible() {
+
     logInModal.shouldBe(visible);
+    logInModalLabel.shouldHave(text("Log in"));
+  }
+
+  public void verifyLogInModalIsNotVisible() {
+    logInModal.shouldNotBe(visible);
   }
 
   public void setLogInUsername(String username) {

@@ -1,6 +1,7 @@
 package tests.ui;
 
 import config.TestConfig;
+import extensions.WithLogin;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import pages.MainPage;
@@ -31,6 +32,7 @@ public class LoginTests extends TestBase {
             .setUsernameOnLogInModal(login)
             .setPasswordOnLogInModal(password)
             .clickOnCloseButtonOnLogInModal()
+            .verifyLogInModalIsNotVisible()
             .verifyUserIsNotLoggedIn();
   }
 
@@ -43,6 +45,19 @@ public class LoginTests extends TestBase {
             .setPasswordOnLogInModal("test123")
             .clickOnLogInButtonOnLogInModal()
             .verifyTextInAlertDialog("Wrong password.")
+            .clickOkInAlertDialog()
+            .verifyLogInModalIsVisible();
+  }
+
+  @DisplayName("Unsuccessful login with non-existent user")
+  @Test
+  void unsuccessfulLoginWithNonExistentUserTest() {
+    mainPage.openMainPage()
+            .openLogInModal()
+            .setUsernameOnLogInModal("testtest123544")
+            .setPasswordOnLogInModal(password)
+            .clickOnLogInButtonOnLogInModal()
+            .verifyTextInAlertDialog("User does not exist.")
             .clickOkInAlertDialog()
             .verifyLogInModalIsVisible();
   }
@@ -74,13 +89,10 @@ public class LoginTests extends TestBase {
   }
 
   @DisplayName("Successful log out")
+  @WithLogin
   @Test
   void successfulLogOutTest() {
     mainPage.openMainPage()
-            .openLogInModal()
-            .setUsernameOnLogInModal(login)
-            .setPasswordOnLogInModal(password)
-            .clickOnLogInButtonOnLogInModal()
             .verifyUserIsLoggedIn(login)
             .logOutUser()
             .verifyUserIsNotLoggedIn();
