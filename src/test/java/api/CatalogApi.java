@@ -33,7 +33,6 @@ public class CatalogApi {
                     .then()
                     .spec(responseSpecStatusCode(200))
                     .extract().as(CategoryResponseModel.class);
-
   }
 
   @Step("Send request to get existing product card by id")

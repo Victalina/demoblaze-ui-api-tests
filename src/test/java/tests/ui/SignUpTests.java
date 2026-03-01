@@ -3,6 +3,8 @@ package tests.ui;
 import helpers.TestData;
 import io.restassured.response.Response;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Tag;
+import org.junit.jupiter.api.Tags;
 import org.junit.jupiter.api.Test;
 import pages.MainPage;
 
@@ -11,13 +13,18 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.emptyString;
 import static org.hamcrest.Matchers.not;
 
+@Tags({
+        @Tag("allUiTests"),
+        @Tag("signupUiTests")
+
+})
 @DisplayName("Sign up tests")
 public class SignUpTests extends TestBase {
 
   private final MainPage mainPage = new MainPage();
 
-  @DisplayName("Successful sign up with new user")
   @Test
+  @DisplayName("Successful sign up with new user")
   void successfulSignUpWithNewUserTest() {
 
     TestData testData = new TestData();
@@ -42,9 +49,9 @@ public class SignUpTests extends TestBase {
     });
   }
 
-  @DisplayName("Unsuccessful sign up with existing user")
   @Test
-  void unsuccessfulSignUpWithExistingUserTest(){
+  @DisplayName("Unsuccessful sign up with existing user")
+  void unsuccessfulSignUpWithExistingUserTest() {
 
     TestData testData = new TestData();
     String login = testData.getLogin();
@@ -61,8 +68,8 @@ public class SignUpTests extends TestBase {
             .verifySignUpModalIsVisible();
   }
 
-  @DisplayName("Unsuccessful sign up after clicking 'Close' button")
   @Test
+  @DisplayName("Unsuccessful sign up after clicking 'Close' button")
   void unsuccessfulSignUpAfterClickingCloseButtonTest() {
 
     TestData testData = new TestData();
@@ -77,8 +84,9 @@ public class SignUpTests extends TestBase {
             .verifySignUpModalIsNotVisible();
   }
 
-  @DisplayName("Unsuccessful sign up with empty username")
+
   @Test
+  @DisplayName("Unsuccessful sign up with empty username")
   void unsuccessfulSignUpWithEmptyUsernameTest() {
 
     TestData testData = new TestData();
@@ -94,8 +102,8 @@ public class SignUpTests extends TestBase {
             .verifySignUpModalIsVisible();
   }
 
-  @DisplayName("Unsuccessful sign up with empty password")
   @Test
+  @DisplayName("Unsuccessful sign up with empty password")
   void unsuccessfulSignUpWithEmptyPasswordTest() {
 
     TestData testData = new TestData();

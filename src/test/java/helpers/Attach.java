@@ -1,5 +1,6 @@
 package helpers;
 
+import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.Selenide;
 import io.qameta.allure.Attachment;
 import org.openqa.selenium.OutputType;
@@ -44,12 +45,19 @@ public class Attach {
   }
 
   public static URL getVideoUrl() {
-    String videoUrl = "https://selenoid.autotests.cloud/video/" + sessionId() + ".mp4";
-    try {
-      return new URL(videoUrl);
-    } catch (MalformedURLException e) {
-      e.printStackTrace();
+    if (Configuration.remote == null) {
+      return null;
     }
-    return null;
+
+    try {
+      URL remoteUrl = new URL(Configuration.remote);
+      String host = remoteUrl.getProtocol() + "://" + remoteUrl.getHost();
+
+      String videoUrl = host + "/video/" + sessionId() + ".mp4";
+      return new URL(videoUrl);
+
+    } catch (MalformedURLException e) {
+      throw new RuntimeException("Failed to build video URL", e);
+    }
   }
 }

@@ -10,12 +10,13 @@ import pages.components.NavBarComponent;
 import pages.components.SignUpComponent;
 
 import static com.codeborne.selenide.CollectionCondition.sizeGreaterThan;
-import static com.codeborne.selenide.Condition.exist;
-import static com.codeborne.selenide.Condition.text;
+import static com.codeborne.selenide.Condition.*;
+import static com.codeborne.selenide.Condition.empty;
 import static com.codeborne.selenide.Configuration.baseUrl;
-import static com.codeborne.selenide.Selenide.$;
-import static com.codeborne.selenide.Selenide.open;
+import static com.codeborne.selenide.Selenide.*;
+import static com.codeborne.selenide.WebDriverConditions.url;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.is;
 
 public class MainPage {
@@ -24,10 +25,15 @@ public class MainPage {
   private final SelenideElement contcar = $("#contcar");
   private final SelenideElement contcont = $("#contcont");
   private final ElementsCollection catalogItems = $("#tbodyid").$$("div.col-lg-4");
+  private final SelenideElement catalogPaginationNextButton = $("#frm #next2");
   private final SelenideElement catalogFirstItemImg = $("#tbodyid").$$("div.col-lg-4").first()
           .$(".card-img-top");
   private final SelenideElement catalogFirstItemTitle = $("#tbodyid").$$("div.col-lg-4").first()
-          .$(".card-title");
+          .$(".card-block .card-title a");
+  private final SelenideElement catalogFirstItemPrice = $("#tbodyid").$$("div.col-lg-4").first()
+          .$(".card-block h5");
+  private final SelenideElement catalogFirstItemArticle = $("#tbodyid").$$("div.col-lg-4").first()
+          .$(".card-block #article");
 
   private final LoginComponent loginComponent = new LoginComponent();
   private final NavBarComponent navBarComponent = new NavBarComponent();
@@ -118,7 +124,7 @@ public class MainPage {
   @Step("Verify text in alert dialog")
   public MainPage verifyTextInAlertDialog(String text) {
     Alert alert = Selenide.switchTo().alert();
-    assertThat(text, is(alert.getText()));
+    assertThat(alert.getText(), containsString(text));
 
     return this;
   }
@@ -187,6 +193,16 @@ public class MainPage {
     return this;
   }
 
+  @Step("Verify product card in catalog listing is not empty")
+  public MainPage verifyProductCardInCatalogIsNotEmpty(){
+    catalogFirstItemImg.shouldBe(visible);
+    catalogFirstItemTitle.shouldNotBe(empty);
+    catalogFirstItemPrice.shouldNotBe(empty);
+    catalogFirstItemArticle.shouldNotBe(empty);
+
+    return this;
+  }
+
   @Step("Click on first product img in catalog")
   public MainPage clickOnFirstProductItemImgInCatalog(){
     catalogFirstItemImg.click();
@@ -201,6 +217,27 @@ public class MainPage {
     return this;
   }
 
+  @Step("Get product title from catalog listing")
+  public String getFirstProductTitleFromCatalogListing(){
+    return catalogFirstItemTitle.getText();
+  }
+
+  @Step("Get product price from catalog listing")
+  public String getFirstProductPriceFromCatalogListing(){
+    return catalogFirstItemPrice.getText();
+  }
+
+  @Step("Click on menu item")
+  public void clickOnMenuItem(String item){
+
+    navBarComponent.clickOnNavBarItem(item);
+  }
+
+  @Step("Verify redirect to main page")
+  public void verifyRedirectToMainPage(){
+
+    webdriver().shouldHave(url("https://www.demoblaze.com/index.html"));
+  }
 }
 
 

@@ -12,7 +12,9 @@ public class TestConfig {
                  TestConfig.class.getClassLoader()
                          .getResourceAsStream("config.properties")) {
 
-      properties.load(input);
+      if (input != null) {
+        properties.load(input);
+      }
 
     } catch (IOException e) {
       throw new RuntimeException("Failed to load config.properties", e);

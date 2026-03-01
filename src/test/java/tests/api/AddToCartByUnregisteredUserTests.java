@@ -22,11 +22,11 @@ import static spec.Spec.responseSpecStatusCode;
         @Tag("cartApiTests")
 
 })
-@DisplayName("Add product to cart by unregistered user")
+@DisplayName("Adding product to cart by unregistered user")
 public class AddToCartByUnregisteredUserTests extends TestBase {
 
   @Test
-  @DisplayName("Add one product to cart by unregistered user")
+  @DisplayName("Adding one product to cart by unregistered user")
   void addOneProductToCartByUnregisteredUserTest() {
 
     EntriesResponseModel responseCatalog = catalogApi.getCatalogEntries();
@@ -55,7 +55,7 @@ public class AddToCartByUnregisteredUserTests extends TestBase {
   }
 
   @Test
-  @DisplayName("Add second product to cart by unregistered user")
+  @DisplayName("Adding second product to cart by unregistered user")
   void addSecondProductToCartByUnregisteredUserTest() {
 
     EntriesResponseModel responseCatalog = catalogApi.getCatalogEntries();
@@ -87,7 +87,7 @@ public class AddToCartByUnregisteredUserTests extends TestBase {
             assertThat(
                     items2.length, is(2)));
 
-    step("Verify second product item is present in cart", () -> {
+    step("Adding second product item is present in cart", () -> {
       ViewCartItemModel addedItem = Arrays.stream(items2)
               .filter(item -> item.getId().equals(uuidSecondProduct))
               .findFirst()
@@ -142,7 +142,7 @@ public class AddToCartByUnregisteredUserTests extends TestBase {
   }
 
   @Test
-  @DisplayName("Add second product with the same uuid and different prod id to cart by unregistered user")
+  @DisplayName("Adding second product with the same uuid and different prod id to cart by unregistered user")
   void addSecondProductWithTheSameUuidToCartByUnregisteredUserTest() {
 
     EntriesResponseModel responseCatalog = catalogApi.getCatalogEntries();

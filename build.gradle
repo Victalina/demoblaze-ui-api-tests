@@ -95,3 +95,33 @@ task signupApiTests(type: Test) {
         includeTags("signupApiTests")
     }
 }
+
+task allUiTests(type: Test) {
+    useJUnitPlatform {
+        includeTags("allUiTests")
+    }
+}
+
+task catalogUiTests(type: Test) {
+    useJUnitPlatform {
+        includeTags("catalogUiTests")
+    }
+}
+
+task cartUiTests(type: Test) {
+    useJUnitPlatform {
+        includeTags("cartUiTests")
+    }
+}
+
+task loginUiTests(type: Test) {
+    useJUnitPlatform {
+        includeTags("loginUiTests")
+    }
+}
+
+task signupUiTests(type: Test) {
+    useJUnitPlatform {
+        includeTags("signupUiTests")
+    }
+}

@@ -3,17 +3,24 @@ package tests.ui;
 import config.TestConfig;
 import extensions.WithLogin;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Tag;
+import org.junit.jupiter.api.Tags;
 import org.junit.jupiter.api.Test;
 import pages.MainPage;
 
+@Tags({
+        @Tag("allUiTests"),
+        @Tag("loginUiTests")
+
+})
 @DisplayName("Login tests")
 public class LoginTests extends TestBase {
   private final String login = TestConfig.get("test.user.login");
   private final String password = TestConfig.get("test.user.password");
   private final MainPage mainPage = new MainPage();
 
-  @DisplayName("Successful login with existing user")
   @Test
+  @DisplayName("Successful login with existing user")
   void successfulLoginWithExistingUserTest() {
     mainPage.openMainPage()
             .verifyUserIsNotLoggedIn()
@@ -24,8 +31,8 @@ public class LoginTests extends TestBase {
             .verifyUserIsLoggedIn(login);
   }
 
-  @DisplayName("Unsuccessful login after clicking 'Close' button")
   @Test
+  @DisplayName("Unsuccessful login after clicking 'Close' button")
   void unsuccessfulLoginAfterClickingCloseButtonTest() {
     mainPage.openMainPage()
             .openLogInModal()
@@ -36,8 +43,8 @@ public class LoginTests extends TestBase {
             .verifyUserIsNotLoggedIn();
   }
 
-  @DisplayName("Unsuccessful login with wrong password")
   @Test
+  @DisplayName("Unsuccessful login with wrong password")
   void unsuccessfulLoginWithWrongPasswordTest() {
     mainPage.openMainPage()
             .openLogInModal()
@@ -49,8 +56,8 @@ public class LoginTests extends TestBase {
             .verifyLogInModalIsVisible();
   }
 
-  @DisplayName("Unsuccessful login with non-existent user")
   @Test
+  @DisplayName("Unsuccessful login with non-existent user")
   void unsuccessfulLoginWithNonExistentUserTest() {
     mainPage.openMainPage()
             .openLogInModal()
@@ -62,8 +69,8 @@ public class LoginTests extends TestBase {
             .verifyLogInModalIsVisible();
   }
 
-  @DisplayName("Unsuccessful login with empty username")
   @Test
+  @DisplayName("Unsuccessful login with empty username")
   void unsuccessfulLoginWithEmptyUsernameTest() {
     mainPage.openMainPage()
             .openLogInModal()
@@ -75,8 +82,8 @@ public class LoginTests extends TestBase {
             .verifyLogInModalIsVisible();
   }
 
-  @DisplayName("Unsuccessful login with empty password")
   @Test
+  @DisplayName("Unsuccessful login with empty password")
   void unsuccessfulLoginWithEmptyPasswordTest() {
     mainPage.openMainPage()
             .openLogInModal()
@@ -88,9 +95,9 @@ public class LoginTests extends TestBase {
             .verifyLogInModalIsVisible();
   }
 
-  @DisplayName("Successful log out")
-  @WithLogin
   @Test
+  @WithLogin
+  @DisplayName("Successful log out")
   void successfulLogOutTest() {
     mainPage.openMainPage()
             .verifyUserIsLoggedIn(login)

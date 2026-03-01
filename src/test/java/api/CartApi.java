@@ -1,6 +1,5 @@
 package api;
 
-import helpers.TestDataFactory;
 import io.qameta.allure.Step;
 import io.restassured.response.Response;
 import models.*;
@@ -29,21 +28,6 @@ public class CartApi {
   @Step("Add product to cart")
   public void addProductToCart(String uuidProduct, String cookie, int productId, boolean flag) {
 
-    AddToCartRequestModel addToCartRequest = new AddToCartRequestModel(
-            uuidProduct, cookie, productId, flag
-    );
-    given(requestSpec)
-            .body(addToCartRequest)
-            .when()
-            .post("/addtocart")
-            .then()
-            .spec(responseSpecStatusCode(200));
-  }
-
-  @Step("Add product to cart by product id with uuid generation")
-  public void addProductToCartWithUuidGeneration(String cookie, int productId, boolean flag) {
-
-    String uuidProduct = TestDataFactory.newCartItemUuid();
     AddToCartRequestModel addToCartRequest = new AddToCartRequestModel(
             uuidProduct, cookie, productId, flag
     );

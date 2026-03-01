@@ -20,7 +20,7 @@ import static spec.Spec.responseSpecStatusCode;
         @Tag("cartApiTests")
 
 })
-@DisplayName("Add product to cart by registered user")
+@DisplayName("Adding product to cart by registered user")
 public class AddToCartByRegisteredUserTest extends TestBase {
 
   private final String login = TestConfig.get("test.user.login");
@@ -34,7 +34,7 @@ public class AddToCartByRegisteredUserTest extends TestBase {
   }
 
   @Test
-  @DisplayName("Add one product to cart by registered user")
+  @DisplayName("Adding one product to cart by registered user")
   void addOneProductToCartByRegisteredUserTest() {
 
     EntriesResponseModel responseCatalog = catalogApi.getCatalogEntries();
@@ -63,7 +63,7 @@ public class AddToCartByRegisteredUserTest extends TestBase {
   }
 
   @Test
-  @DisplayName("Add second product to cart by registered user")
+  @DisplayName("Adding second product to cart by registered user")
   void addSecondProductToCartByRegisteredUserTest() {
 
     EntriesResponseModel responseCatalog = catalogApi.getCatalogEntries();
@@ -107,7 +107,7 @@ public class AddToCartByRegisteredUserTest extends TestBase {
   }
 
   @Test
-  @DisplayName("Add second product with the same prod id and different uuid to cart by registered user")
+  @DisplayName("Adding second product with the same prod id and different uuid to cart by registered user")
   void addSecondProductWithTheSameProdIdToCartByRegisteredUserTest() {
 
     EntriesResponseModel responseCatalog = catalogApi.getCatalogEntries();
@@ -150,7 +150,7 @@ public class AddToCartByRegisteredUserTest extends TestBase {
   }
 
   @Test
-  @DisplayName("Add second product with the same uuid and different prod id to cart by registered user")
+  @DisplayName("Adding second product with the same uuid and different prod id to cart by registered user")
   void addSecondProductWithTheSameUuidToCartByRegisteredUserTest() {
 
     EntriesResponseModel responseCatalog = catalogApi.getCatalogEntries();
