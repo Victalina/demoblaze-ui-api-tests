@@ -28,6 +28,7 @@ public class TestBase {
 
     RestAssured.baseURI = TestConfig.get("base.url.api");
     Configuration.baseUrl = TestConfig.get("base.url.ui");
+    Configuration.pageLoadStrategy = "eager";
     Configuration.timeout = 8000;
     Configuration.browser = System.getProperty("browser", "chrome");
     Configuration.browserVersion = System.getProperty("version", "128");
