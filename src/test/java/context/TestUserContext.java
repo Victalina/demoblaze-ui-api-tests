@@ -9,10 +9,19 @@ public class TestUserContext {
   }
 
   public static User get() {
-    return USER.get();
+
+    User user = USER.get();
+
+    if (user == null) {
+      user = UserPool.getUser();
+      USER.set(user);
+    }
+
+    return user;
   }
 
   public static void clear() {
     USER.remove();
   }
+
 }

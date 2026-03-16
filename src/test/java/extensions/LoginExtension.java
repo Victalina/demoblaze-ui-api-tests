@@ -1,6 +1,7 @@
 package extensions;
 
 import api.AuthApi;
+import config.ParallelConfig;
 import context.TestUserContext;
 import context.User;
 import context.UserPool;
@@ -20,8 +21,10 @@ public class LoginExtension implements BeforeEachCallback, AfterEachCallback {
   public void beforeEach(ExtensionContext context) {
 
     User user = UserPool.getUser();
-    TestUserContext.set(user);
 
+    if (ParallelConfig.isParallelRun()) {
+      TestUserContext.set(user);
+    }
     String token = authApi.getTokenForRegisteredUser(user.getLogin(), user.getPassword());
     open("/blazemeter-favicon-32x32.png");
     getWebDriver().manage().addCookie(new Cookie("tokenp_", token));
@@ -29,12 +32,13 @@ public class LoginExtension implements BeforeEachCallback, AfterEachCallback {
 
   @Override
   public void afterEach(ExtensionContext context) {
+    if (ParallelConfig.isParallelRun()) {
+      User user = TestUserContext.get();
 
-    User user = TestUserContext.get();
-
-    if (user != null) {
-      UserPool.releaseUser(user);
-      TestUserContext.clear();
+      if (user != null) {
+        UserPool.releaseUser(user);
+        TestUserContext.clear();
+      }
     }
   }
 }

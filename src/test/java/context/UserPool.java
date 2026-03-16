@@ -1,5 +1,8 @@
 package context;
 
+import config.ParallelConfig;
+import config.TestConfig;
+
 import java.util.*;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
@@ -20,13 +23,19 @@ public class UserPool {
   }
 
   public static User getUser() {
-    User user = USERS.poll();
 
-    if (user == null) {
-      throw new RuntimeException("No available test users in UserPool");
+    if (ParallelConfig.isParallelRun()) {
+
+      User user = USERS.poll();
+
+      if (user == null) {
+        throw new RuntimeException("No available test users in UserPool");
+
+      }
+      return user;
     }
 
-    return user;
+    return new User(TestConfig.get("test.user.login"), TestConfig.get("test.user.password"));
   }
 
   public static void releaseUser(User user) {
