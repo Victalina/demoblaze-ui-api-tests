@@ -34,6 +34,10 @@ public class TestBase {
     Configuration.browserSize = System.getProperty("windowSize", "1920x1080");
     Configuration.remote = System.getProperty("remoteBrowser");
 
+    if (System.getProperty("slowEnv") != null) {
+      Configuration.timeout = 30000;
+    }
+
     if (Configuration.remote != null) {
       DesiredCapabilities capabilities = new DesiredCapabilities();
       capabilities.setCapability("selenoid:options", Map.<String, Object>of(
