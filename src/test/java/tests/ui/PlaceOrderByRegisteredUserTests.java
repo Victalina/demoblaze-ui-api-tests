@@ -1,6 +1,7 @@
 package tests.ui;
 
-import config.TestConfig;
+import context.TestUserContext;
+import context.User;
 import extensions.WithLogin;
 import helpers.TestData;
 import helpers.TestDataFactory;
@@ -23,14 +24,17 @@ public class PlaceOrderByRegisteredUserTests extends TestBase {
   @BeforeEach
   void cleanCartIfNeeded() {
 
-    cartApi.ensureCartIsEmptyForRegisteredUser(TestConfig.get("test.user.login"),
-            TestConfig.get("test.user.password"));
+    User user = TestUserContext.get();
+
+    if (user != null) {
+      cartApi.ensureCartIsEmptyForRegisteredUser(
+              user.getLogin(),
+              user.getPassword());
+    }
   }
 
   private final MainPage mainPage = new MainPage();
   private final CartPage cartPage = new CartPage();
-  private final String login = TestConfig.get("test.user.login");
-  private final String password = TestConfig.get("test.user.password");
 
   @Test
   @DisplayName("Placing order with one product item in cart by registered user")
@@ -43,7 +47,7 @@ public class PlaceOrderByRegisteredUserTests extends TestBase {
     EntryResponseModel[] entries = responseCatalog.getItems();
     int selectedId = step("Select product id from catalog", () -> entries[0].getId());
 
-    String cookie = authApi.getTokenForRegisteredUser(login, password);
+    String cookie = authApi.getTokenForRegisteredUser(TestUserContext.get().getLogin(), TestUserContext.get().getPassword());
     String uuidProduct = TestDataFactory.newCartItemUuid();
 
     cartApi.addProductToCart(uuidProduct, cookie, selectedId, true);
@@ -82,7 +86,7 @@ public class PlaceOrderByRegisteredUserTests extends TestBase {
     EntryResponseModel[] entries = responseCatalog.getItems();
     int selectedId = step("Select product id from catalog", () -> entries[0].getId());
 
-    String cookie = authApi.getTokenForRegisteredUser(login, password);
+    String cookie = authApi.getTokenForRegisteredUser(TestUserContext.get().getLogin(), TestUserContext.get().getPassword());
     String uuidProduct = TestDataFactory.newCartItemUuid();
 
     cartApi.addProductToCart(uuidProduct, cookie, selectedId, true);
@@ -115,7 +119,7 @@ public class PlaceOrderByRegisteredUserTests extends TestBase {
     EntryResponseModel[] entries = responseCatalog.getItems();
     int selectedId = step("Select product id from catalog", () -> entries[0].getId());
 
-    String cookie = authApi.getTokenForRegisteredUser(login, password);
+    String cookie = authApi.getTokenForRegisteredUser(TestUserContext.get().getLogin(), TestUserContext.get().getPassword());
     String uuidProduct = TestDataFactory.newCartItemUuid();
 
     cartApi.addProductToCart(uuidProduct, cookie, selectedId, true);
@@ -147,7 +151,7 @@ public class PlaceOrderByRegisteredUserTests extends TestBase {
     EntryResponseModel[] entries = responseCatalog.getItems();
     int firstSelectedId = step("Select product id from catalog", () -> entries[0].getId());
 
-    String cookie = authApi.getTokenForRegisteredUser(login, password);
+    String cookie = authApi.getTokenForRegisteredUser(TestUserContext.get().getLogin(), TestUserContext.get().getPassword());
     String uuidFirstProduct = TestDataFactory.newCartItemUuid();
 
     cartApi.addProductToCart(uuidFirstProduct, cookie, firstSelectedId, true);
@@ -190,7 +194,7 @@ public class PlaceOrderByRegisteredUserTests extends TestBase {
     EntryResponseModel[] entries = responseCatalog.getItems();
     int selectedId = step("Select product id from catalog", () -> entries[0].getId());
 
-    String cookie = authApi.getTokenForRegisteredUser(login, password);
+    String cookie = authApi.getTokenForRegisteredUser(TestUserContext.get().getLogin(), TestUserContext.get().getPassword());
     String uuidProduct = TestDataFactory.newCartItemUuid();
 
     cartApi.addProductToCart(uuidProduct, cookie, selectedId, true);
@@ -224,7 +228,7 @@ public class PlaceOrderByRegisteredUserTests extends TestBase {
     EntryResponseModel[] entries = responseCatalog.getItems();
     int selectedId = step("Select product id from catalog", () -> entries[0].getId());
 
-    String cookie = authApi.getTokenForRegisteredUser(login, password);
+    String cookie = authApi.getTokenForRegisteredUser(TestUserContext.get().getLogin(), TestUserContext.get().getPassword());
     String uuidProduct = TestDataFactory.newCartItemUuid();
 
     cartApi.addProductToCart(uuidProduct, cookie, selectedId, true);
@@ -257,7 +261,7 @@ public class PlaceOrderByRegisteredUserTests extends TestBase {
     EntryResponseModel[] entries = responseCatalog.getItems();
     int selectedId = step("Select product id from catalog", () -> entries[0].getId());
 
-    String cookie = authApi.getTokenForRegisteredUser(login, password);
+    String cookie = authApi.getTokenForRegisteredUser(TestUserContext.get().getLogin(), TestUserContext.get().getPassword());
     String uuidProduct = TestDataFactory.newCartItemUuid();
 
     cartApi.addProductToCart(uuidProduct, cookie, selectedId, true);
@@ -289,7 +293,7 @@ public class PlaceOrderByRegisteredUserTests extends TestBase {
     EntryResponseModel[] entries = responseCatalog.getItems();
     int selectedId = step("Select product id from catalog", () -> entries[0].getId());
 
-    String cookie = authApi.getTokenForRegisteredUser(login, password);
+    String cookie = authApi.getTokenForRegisteredUser(TestUserContext.get().getLogin(), TestUserContext.get().getPassword());
     String uuidProduct = TestDataFactory.newCartItemUuid();
 
     cartApi.addProductToCart(uuidProduct, cookie, selectedId, true);

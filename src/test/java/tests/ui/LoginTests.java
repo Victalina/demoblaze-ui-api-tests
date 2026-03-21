@@ -1,6 +1,7 @@
 package tests.ui;
 
-import config.TestConfig;
+import context.TestUserContext;
+import context.User;
 import extensions.WithLogin;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
@@ -15,8 +16,7 @@ import pages.MainPage;
 })
 @DisplayName("Login tests")
 public class LoginTests extends TestBase {
-  private final String login = TestConfig.get("test.user.login");
-  private final String password = TestConfig.get("test.user.password");
+  User user = TestUserContext.get();
   private final MainPage mainPage = new MainPage();
 
   @Test
@@ -25,10 +25,10 @@ public class LoginTests extends TestBase {
     mainPage.openMainPage()
             .verifyUserIsNotLoggedIn()
             .openLogInModal()
-            .setUsernameOnLogInModal(login)
-            .setPasswordOnLogInModal(password)
+            .setUsernameOnLogInModal(user.getLogin())
+            .setPasswordOnLogInModal(user.getPassword())
             .clickOnLogInButtonOnLogInModal()
-            .verifyUserIsLoggedIn(login);
+            .verifyUserIsLoggedIn(user.getLogin());
   }
 
   @Test
@@ -36,8 +36,8 @@ public class LoginTests extends TestBase {
   void unsuccessfulLoginAfterClickingCloseButtonTest() {
     mainPage.openMainPage()
             .openLogInModal()
-            .setUsernameOnLogInModal(login)
-            .setPasswordOnLogInModal(password)
+            .setUsernameOnLogInModal(user.getLogin())
+            .setPasswordOnLogInModal(user.getPassword())
             .clickOnCloseButtonOnLogInModal()
             .verifyLogInModalIsNotVisible()
             .verifyUserIsNotLoggedIn();
@@ -48,7 +48,7 @@ public class LoginTests extends TestBase {
   void unsuccessfulLoginWithWrongPasswordTest() {
     mainPage.openMainPage()
             .openLogInModal()
-            .setUsernameOnLogInModal(login)
+            .setUsernameOnLogInModal(user.getLogin())
             .setPasswordOnLogInModal("test123")
             .clickOnLogInButtonOnLogInModal()
             .verifyTextInAlertDialog("Wrong password.")
@@ -62,7 +62,7 @@ public class LoginTests extends TestBase {
     mainPage.openMainPage()
             .openLogInModal()
             .setUsernameOnLogInModal("testtest123544")
-            .setPasswordOnLogInModal(password)
+            .setPasswordOnLogInModal(user.getPassword())
             .clickOnLogInButtonOnLogInModal()
             .verifyTextInAlertDialog("User does not exist.")
             .clickOkInAlertDialog()
@@ -75,7 +75,7 @@ public class LoginTests extends TestBase {
     mainPage.openMainPage()
             .openLogInModal()
             .setUsernameOnLogInModal("")
-            .setPasswordOnLogInModal(password)
+            .setPasswordOnLogInModal(user.getPassword())
             .clickOnLogInButtonOnLogInModal()
             .verifyTextInAlertDialog("Please fill out Username and Password.")
             .clickOkInAlertDialog()
@@ -87,7 +87,7 @@ public class LoginTests extends TestBase {
   void unsuccessfulLoginWithEmptyPasswordTest() {
     mainPage.openMainPage()
             .openLogInModal()
-            .setUsernameOnLogInModal(login)
+            .setUsernameOnLogInModal(user.getLogin())
             .setPasswordOnLogInModal("")
             .clickOnLogInButtonOnLogInModal()
             .verifyTextInAlertDialog("Please fill out Username and Password.")
@@ -100,7 +100,7 @@ public class LoginTests extends TestBase {
   @DisplayName("Successful log out")
   void successfulLogOutTest() {
     mainPage.openMainPage()
-            .verifyUserIsLoggedIn(login)
+            .verifyUserIsLoggedIn(TestUserContext.get().getLogin())
             .logOutUser()
             .verifyUserIsNotLoggedIn();
   }
